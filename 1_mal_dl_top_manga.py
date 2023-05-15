@@ -40,7 +40,7 @@ def download_mal_top_mangas(num_manga):
         mal_top_mangas = pd.DataFrame(
             links_list, columns=["title", "mal_link", "mal_id"]
         )
-        mal_top_mangas.to_csv("data/key_tables/mal_top_manga.csv")
+        mal_top_mangas.to_csv("data/raw/mal_top_manga.csv")
         browser.close()
 
 

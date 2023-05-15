@@ -4,31 +4,29 @@ import datetime
 import time
 import pandas as pd
 from playwright.sync_api import sync_playwright
-import re
 
 
 # %%
-def download_mdex_links(mdex_search, ggl_search, ggl_search_2, ranks, start, end):
+def download_mdex_links(mdex_search, ggl_search, ranks, start, end):
     with sync_playwright() as p:
         mdex_dict_links = []
 
         s_mdex_search = mdex_search[start:end]
         s_ggl_search = ggl_search[start:end]
-        s_ggl_search_2 = ggl_search_2[start:end]
         s_ranks = ranks[start:end]
 
         error_count = 0
 
-        for mdex_search, ggl_search, ggl_search_2, rank in zip(
-            s_mdex_search, s_ggl_search, s_ggl_search_2, s_ranks
-        ):
+        for mdex_search, ggl_search, rank in zip(s_mdex_search, s_ggl_search, s_ranks):
             browser = p.chromium.launch()
             page = browser.new_page()
 
             try:
                 page.goto(mdex_search)
-                page.wait_for_selector(".manga-card-dense a")
-                mdex_link = page.get_attribute(".manga-card-dense a", "href")
+                page.wait_for_selector(".manga-card-dense a", timeout=5000)
+                mdex_link = page.get_attribute(
+                    ".manga-card-dense a", "href", timeout=5000
+                )
 
                 link_dict = {
                     "rank": rank,
@@ -45,8 +43,8 @@ def download_mdex_links(mdex_search, ggl_search, ggl_search_2, ranks, start, end
                 print("FAIL-MDEX", mdex_search, rank)
                 try:
                     page.goto(ggl_search)
-                    page.wait_for_selector("div.g a")
-                    mdex_link = page.get_attribute("div.g a", "href")
+                    page.wait_for_selector("div.g a", timeout=5000)
+                    mdex_link = page.get_attribute("div.g a", "href", timeout=5000)
 
                     link_dict = {
                         "rank": rank,
@@ -58,24 +56,6 @@ def download_mdex_links(mdex_search, ggl_search, ggl_search_2, ranks, start, end
                     print("PASS-GGL_1", ggl_search, mdex_link)
 
                 except:
-                    # browser.close()
-                    # browser = p.chromium.launch()
-                    # page = browser.new_page()
-                    # print("FAIL-GGL_1", ggl_search, rank)
-                    # try:
-                    #     page.goto(ggl_search_2)
-                    #     page.wait_for_selector("div.g a")
-                    #     mdex_link = page.get_attribute("div.g a", "href")
-
-                    #     link_dict = {
-                    #         "rank": rank,
-                    #         "search_term": ggl_search_2,
-                    #         "mdex_link": mdex_link,
-                    #     }
-                    #     mdex_dict_links.append(link_dict)
-                    #     print("PASS-GGL_2", ggl_search_2, mdex_link)
-
-                    # except:
                     print("FAIL-GGL_1", ggl_search, rank)
                     error_count += 1
 
@@ -86,7 +66,7 @@ def download_mdex_links(mdex_search, ggl_search, ggl_search_2, ranks, start, end
 
         manga_df = pd.DataFrame(mdex_dict_links)
         manga_df.to_csv(
-            "data/key_tables/mdex_link_tables/mdex_{}_to_{}.csv".format(start, end),
+            "data/raw/mdex_link_tables/mdex_{}_to_{}.csv".format(start, end),
             index=False,
         )
 
@@ -94,10 +74,13 @@ def download_mdex_links(mdex_search, ggl_search, ggl_search_2, ranks, start, end
 
 
 # %%
-mal_top_mangas = pd.read_csv("data/key_tables/mal_top_manga.csv")
+mal_top_mangas = pd.read_csv("data/raw/mal_top_manga.csv")
 ranks = mal_top_mangas["rank"].to_list()
 titles = mal_top_mangas["title"].to_list()
-titles = [title.replace('"', "").replace("'", "") for title in titles]
+
+titles = [
+    title.replace('"', "").replace("'", "").replace("&", "%26") for title in titles
+]
 
 mdex_search_urls = [
     "https://mangadex.org/search?q={}&tab=titles".format(title).replace(" ", "+")
@@ -109,34 +92,27 @@ ggl_search_urls = [
     ).replace(" ", "+")
     for title in titles
 ]
-ggl_search_urls_2 = [
-    "https://www.google.com/search?q={}+mangadex".format(title).replace(" ", "+")
-    for title in titles
-]
 
 # %%
 start_time = datetime.datetime.now()
-start_n = 6150
+start_n = 13800
 end_n = 15050
-inc_size = 25
+inc_size = 50
 sleep_time = 60
 
 error_count = 0
-while start_n < end_n and error_count < 10:
+while start_n < end_n and error_count < 50:
     error_count = download_mdex_links(
         mdex_search_urls,
         ggl_search_urls,
-        ggl_search_urls_2,
         ranks,
         start_n,
         start_n + inc_size,
     )
-    duration = datetime.datetime.now() - start_time
-    total_seconds = int(duration.total_seconds())
-    minutes = total_seconds // 60
-    seconds = total_seconds % 60
-    time_difference_string = f"{minutes:02}:{seconds:02}"
-    print(start_n, time_difference_string, error_count)
+    total_seconds = (datetime.datetime.now() - start_time).total_seconds()
+    time_formatted = str(datetime.timedelta(seconds=total_seconds))
+
+    print(start_n, time_formatted, error_count)
     start_n += inc_size
 
     time.sleep(sleep_time)

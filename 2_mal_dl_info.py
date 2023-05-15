@@ -79,7 +79,7 @@ def download_mal_manga_info(stats_links, ranks, start, end):
         browser.close()
         manga_df = pd.DataFrame(manga_dict_list)
         manga_df.to_csv(
-            "data/key_tables/mal_data_tables/mal_{}_to_{}.csv".format(start, end),
+            "data/raw/mal_data_tables/mal_{}_to_{}.csv".format(start, end),
             index=False,
         )
 
@@ -87,7 +87,7 @@ def download_mal_manga_info(stats_links, ranks, start, end):
 
 
 # %%
-mal_top_mangas = pd.read_csv("data/key_tables/mal_top_manga.csv")
+mal_top_mangas = pd.read_csv("data/raw/mal_top_manga.csv")
 ranks = mal_top_mangas["rank"].to_list()
 stats_links = [link + "/stats" for link in mal_top_mangas["mal_link"].to_list()]
 
