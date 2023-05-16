@@ -21,7 +21,7 @@ ranks = matching_mal_mdex_links["rank"].to_list()
 
 # %%
 start_time = datetime.datetime.now()
-start_n = 1
+start_n = 7261
 end_n = len(ranks)
 sleep_time = 30
 

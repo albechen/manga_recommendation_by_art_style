@@ -56,8 +56,7 @@ def download_mal_user_manga_list(user_list, user_ids, start, end):
     error_count = 0
 
     for username, user_idx in zip(s_users, s_user_ids):
-        sleep_time = random.randint(3, 4) / 2
-        time.sleep(sleep_time)
+        time.sleep(1.5)
         response_json, status_code = get_user_list(username, access_token)
 
         if status_code == 200:
@@ -95,7 +94,7 @@ user_index = unique_users["user_index"].to_list()
 # %%
 start_time = datetime.datetime.now()
 prior_time = datetime.datetime.now()
-start_n = 64500
+start_n = 125200
 end_n = len(user_index)
 inc_size = 100
 sleep_time = 15

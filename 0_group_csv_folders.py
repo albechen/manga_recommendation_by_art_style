@@ -1,44 +1,6 @@
 # %%
 import os
 import pandas as pd
-import re
-
-# %%
-path = "data/images"
-path_manga = ["/".join([path, f]) for f in os.listdir(path)][0]
-path_manga = "/".join([path_manga, os.listdir(path_manga)[0]])
-cover_path = "/".join([path_manga, "cover.jpg"])
-
-folder_list = os.listdir(path_manga)
-folder_list.remove("download.db")
-folder_list.remove("cover.jpg")
-folder_list = [x for x in folder_list]
-# %%
-folder_name = folder_list[0]
-
-
-def get_vol_ch_folder_name(folder_name):
-    folder_adj = re.sub(r"\[.*?\]", "", folder_name)
-    folder_adj = folder_adj.replace(" ", "")
-
-    vol_id = "Vol."
-    ch_id = "Ch."
-    vol_idx = folder_adj.find(vol_id)
-    ch_idx = folder_adj.find(ch_id)
-
-    if vol_idx != -1 and ch_idx != -1:
-        try:
-            vol_num = int(folder_adj[vol_idx + len(vol_id) : ch_idx])
-            ch_num = int(folder_adj[ch_idx + len(ch_id) :])
-            return [vol_num, ch_num, folder_name]
-        except:
-            return None
-    return None
-
-
-vol_chp_folders = [get_vol_ch_folder_name(n) for n in folder_list]
-vol_chp_folders.sort()
-sorted_folders = [vol_chp_folders]
 
 
 # %%
