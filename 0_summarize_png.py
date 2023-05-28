@@ -107,28 +107,3 @@ for n in range(total_pic):
 # %%
 pic_summary_csv = pd.DataFrame(pic_summary)
 pic_summary_csv.to_csv("data/images/pic_summary.csv", index=False)
-
-
-# %%
-pic_summary_csv = pd.read_csv("data/images/pic_summary.csv")
-
-# %%
-
-PCT_WHITE_CUTOFF = 84.56
-
-
-# %%
-import matplotlib.pyplot as plt
-
-# Assuming you have a list of values named "data"
-
-# Create a histogram
-plt.hist(pic_summary_csv["real_pic_white"].to_list())
-
-# Add labels and title
-plt.xlabel("Values")
-plt.ylabel("Frequency")
-plt.title("Histogram")
-
-# Display the histogram
-plt.show()
