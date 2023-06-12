@@ -3,3 +3,4 @@ data/images/manga
 data/images/covers
 data/raw
 data/tokens
+*.csv

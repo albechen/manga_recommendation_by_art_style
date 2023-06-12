@@ -1,0 +1,21 @@
+
+features
+https://towardsdatascience.com/transfer-learning-on-greyscale-images-how-to-fine-tune-pretrained-models-on-black-and-white-9a5150755c7a
+https://becominghuman.ai/extract-a-feature-vector-for-any-image-with-pytorch-9717561d1d4c
+
+tsne
+https://towardsdatascience.com/t-sne-clearly-explained-d84c537f53a
+https://distill.pub/2016/misread-tsne/
+
+SIMILARITIES
+https://towardsdatascience.com/image-similarity-with-deep-learning-c17d83068f59
+
+RECC
+https://asdkazmi.medium.com/ai-movies-recommendation-system-with-clustering-based-k-means-algorithm-f04467e02fcd
+
+
+other RECC
+https://github.com/Mohitkumar6122/Anime-Recommendation
+https://github.com/Fro116/RecommenderSystem
+https://myanimelist.net/forum/?topicid=2018046
+https://towardsdatascience.com/deep-dive-into-netflixs-recommender-system-341806ae3b48
