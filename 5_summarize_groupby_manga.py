@@ -32,4 +32,4 @@ percentiles_df
 pct_by_rank = rank_count.merge(percentiles_df, on="rank", how="left")
 pct_by_rank
 # %%
-pct_by_rank.to_csv("data/processed/image_features_by_managa.csv")
+pct_by_rank.to_csv("data/processed/image_features_by_managa.csv", index=False)
