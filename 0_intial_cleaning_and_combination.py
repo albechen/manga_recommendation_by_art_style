@@ -121,6 +121,18 @@ def clean_vol_and_chp(df):
 
 
 ############################################
+# MAL DATA -- GET TOTAL NUMBER SCORES
+############################################
+def get_total_scores(df):
+    clean_df = df.copy()
+    mal_score_columns = clean_df.filter(like="score")
+    clean_df["score_total"] = mal_score_columns.sum(axis=1)
+    clean_df = clean_df[clean_df["score_total"] >= 10]
+    clean_df = clean_df.drop(["score_total"], axis=1)
+    return clean_df
+
+
+############################################
 # MAL DATA  -- FULL CLEAN METHOD
 ############################################
 
@@ -142,16 +154,16 @@ mal_data_col = {
     "Dropped": "mal_dropped",
     "Plan to Read": "mal_planned",
     "Total": "mal_total",
-    "score_10": "mal_score_10",
-    "score_9": "mal_score_9",
-    "score_8": "mal_score_8",
-    "score_7": "mal_score_7",
-    "score_6": "mal_score_6",
-    "score_5": "mal_score_5",
-    "score_4": "mal_score_4",
-    "score_3": "mal_score_3",
-    "score_2": "mal_score_2",
-    "score_1": "mal_score_1",
+    "score_10": "mal_score_100",
+    "score_9": "mal_score_90",
+    "score_8": "mal_score_80",
+    "score_7": "mal_score_70",
+    "score_6": "mal_score_60",
+    "score_5": "mal_score_50",
+    "score_4": "mal_score_40",
+    "score_3": "mal_score_30",
+    "score_2": "mal_score_20",
+    "score_1": "mal_score_10",
 }
 
 mal_data_comb_dict = [
@@ -166,6 +178,7 @@ def clean_mal_data_df(df, mal_data_comb_dict, mal_data_col):
     clean_df = extract_start_end_published_years(clean_df)
     clean_df = convert_comma_num_to_int(clean_df, col_to_int)
     clean_df = clean_vol_and_chp(clean_df)
+    clean_df = get_total_scores(clean_df)
     clean_df = clean_df[list(mal_data_col)].rename(columns=mal_data_col)
     clean_df["mal_data"] = 1
     return clean_df
@@ -190,12 +203,19 @@ def clean_mdex_data_df(df_top, df_mdex, mdex_data_col):
 
 
 ############################################
-# ANI DATA  -- FULL CLEAN METHOD
+# ANI DATA  -- FULL CLEAN METHOD & GET TOTAL NUMBER SCORES
 ############################################
 def clean_ani_data_df(df):
-    clean_ani_data = df.drop(["mal_id", "ani_id"], axis=1)
-    clean_ani_data["ani_data"] = 1
-    return clean_ani_data
+    clean_df = df.copy()
+    ani_score_columns = clean_df.filter(like="ani_score")
+
+    clean_df["score_total"] = ani_score_columns.sum(axis=1)
+    clean_df = clean_df[clean_df["score_total"] >= 10]
+
+    clean_df = clean_df.drop(["mal_id", "ani_id", "score_total"], axis=1)
+    clean_df["ani_data"] = 1
+
+    return clean_df
 
 
 # %%
@@ -209,8 +229,6 @@ ani_data = pd.read_csv("data/raw/ani_data.csv")
 # clean_mdex_data = clean_mdex_data_df(mal_top_manga, mdex_data, mdex_data_col)
 cleaned_mal_data = clean_mal_data_df(mal_data, mal_data_comb_dict, mal_data_col)
 clean_ani_data = clean_ani_data_df(ani_data)
-
-# %%
 
 # %%
 main_df = mal_top_manga[["rank", "title"]].copy()
