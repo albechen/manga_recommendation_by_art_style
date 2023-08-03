@@ -31,5 +31,5 @@ similarity_df = pd.DataFrame(similarity_matrix, index=rank_list, columns=rank_li
 similarity_df
 
 # %%
-similarity_df.to_csv("data/processed/image_feature_similarity.csv")
+similarity_df.to_csv("data/processed/similarity_image_feature.csv")
 # %%

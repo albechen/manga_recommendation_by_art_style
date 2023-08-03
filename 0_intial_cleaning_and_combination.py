@@ -150,7 +150,7 @@ mal_data_col = {
     "Favorites": "mal_favorites",
     "Reading": "mal_reading",
     "Completed": "mal_completed",
-    "On-Hold": "mal_completed",
+    "On-Hold": "mal_on_hold",
     "Dropped": "mal_dropped",
     "Plan to Read": "mal_planned",
     "Total": "mal_total",
