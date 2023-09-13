@@ -1,6 +1,7 @@
 *.json
-data/images/manga
-data/images/covers
+data/images/saved_manga
+data/images/saved_covers
+data/images/summary
 data/raw
 data/tokens
 *.csv
