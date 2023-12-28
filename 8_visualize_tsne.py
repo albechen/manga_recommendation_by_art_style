@@ -47,7 +47,9 @@ def visualize_tsne_by_hue(
     plt.xlim(x_min, x_max)
     plt.ylim(y_min, y_max)
 
-    save_path = "data/images/results/{}_{}_{}.png".format(data_col, hue_col, hue)
+    save_path = "data/images/results/{0}/{1}/{0}_{1}_{2}.png".format(
+        data_col, hue_col, hue
+    )
     plt.savefig(save_path, bbox_inches="tight")
     plt.show()
 
@@ -65,36 +67,49 @@ def visualize_tsne_individual_hue(df, dataset_name, hue_col):
 
 
 # %%
-dataset_name = "image_pca"
-visualize_tsne_by_hue(df, df, dataset_name, "mal_demographic")
-visualize_tsne_by_hue(df, df, dataset_name, "starting_decade")
-visualize_tsne_by_hue(df, df, dataset_name, "mean_score")
+path = "data/images/results"
+dataset_list = ["image_pca", "doc2vec", "tag_svd"]
+hue_list = ["starting_decade", "mal_demographic", "mean_score"]
+
+for dataset in dataset_list:
+    for hue in hue_list:
+        visualize_tsne_by_hue(df, df, dataset, hue)
+        visualize_tsne_individual_hue(df, dataset, hue)
 
 # %%
-dataset_name = "image_pca"
-visualize_tsne_individual_hue(df, dataset_name, "mal_demographic")
-visualize_tsne_individual_hue(df, dataset_name, "starting_decade")
+# dataset_name = "image_pca"
+# visualize_tsne_by_hue(df, df, dataset_name, "mal_demographic")
+# visualize_tsne_by_hue(df, df, dataset_name, "starting_decade")
+# visualize_tsne_by_hue(df, df, dataset_name, "mean_score")
 
-# %%
+# # %%
+# dataset_name = "image_pca"
+# visualize_tsne_individual_hue(df, dataset_name, "mal_demographic")
+# visualize_tsne_individual_hue(df, dataset_name, "starting_decade")
+# visualize_tsne_individual_hue(df, dataset_name, "mean_score")
+
+# # %%
 # dataset_name = "tag_svd"
-# visualize_tsne_by_hue(df, dataset_name, "mal_demographic")
-# visualize_tsne_by_hue(df, dataset_name, "starting_decade")
-# visualize_tsne_by_hue(df, dataset_name, "mean_score")
+# visualize_tsne_by_hue(df, df, dataset_name, "mal_demographic")
+# visualize_tsne_by_hue(df, df, dataset_name, "starting_decade")
+# visualize_tsne_by_hue(df, df, dataset_name, "mean_score")
 
 # # %%
 # dataset_name = "tag_svd"
 # visualize_tsne_individual_hue(df, dataset_name, "mal_demographic")
 # visualize_tsne_individual_hue(df, dataset_name, "starting_decade")
+# visualize_tsne_individual_hue(df, dataset_name, "mean_score")
 
 # # %%
 # dataset_name = "doc2vec"
-# visualize_tsne_by_hue(df, dataset_name, "mal_demographic")
-# visualize_tsne_by_hue(df, dataset_name, "starting_decade")
-# visualize_tsne_by_hue(df, dataset_name, "mean_score")
+# visualize_tsne_by_hue(df, df, dataset_name, "mal_demographic")
+# visualize_tsne_by_hue(df, df, dataset_name, "starting_decade")
+# visualize_tsne_by_hue(df, df, dataset_name, "mean_score")
 
 # # %%
 # dataset_name = "doc2vec"
 # visualize_tsne_individual_hue(df, dataset_name, "mal_demographic")
 # visualize_tsne_individual_hue(df, dataset_name, "starting_decade")
+# visualize_tsne_individual_hue(df, dataset_name, "mean_score")
 
 # %%

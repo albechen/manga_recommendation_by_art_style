@@ -15,7 +15,8 @@ def find_png_files_with_prefix(folder_path, prefix):
 
 
 def save_gif(dataset, hue, path):
-    prefix = "{}_{}_".format(dataset, hue)
+    path = path + "/{0}/{1}".format(dataset, hue)
+    prefix = "{0}_{1}_".format(dataset, hue)
     image_list = find_png_files_with_prefix(path, prefix)
 
     images = []
@@ -38,16 +39,13 @@ def save_gif(dataset, hue, path):
 
 
 # %%
-dataset = "image_pca"
-hue = "starting_decade"
 path = "data/images/results"
-save_gif(dataset, hue, path)
+dataset_list = ["image_pca", "doc2vec", "tag_svd"]
+hue_list = ["starting_decade", "mal_demographic", "mean_score"]
 
-
+for dataset in dataset_list:
+    for hue in hue_list:
+        save_gif(dataset, hue, path)
 # %%
-dataset = "image_pca"
-hue = "mal_demographic"
-path = "data/images/results"
-save_gif(dataset, hue, path)
 
 # %%
