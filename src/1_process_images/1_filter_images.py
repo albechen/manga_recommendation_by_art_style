@@ -2,8 +2,10 @@
 import pandas as pd
 import os
 import shutil
+import matplotlib.pyplot as plt
 
 pic_summary = pd.read_csv("data/images/pic_summary.csv")
+
 
 # %%
 #############################################################
@@ -26,20 +28,15 @@ median_ranks = (
     .rename(columns={"width": "median_width", "height": "median_height"})
 )
 
-median_filtered = initial_filter.merge(median_ranks, on="rank")
-median_filtered["hw_ratio"] = median_filtered["width"] / median_filtered["height"]
-median_filtered["median_hw_ratio"] = (
-    median_filtered["median_width"] / median_filtered["median_height"]
-)
-median_filtered["hw_ratio_diff"] = (
-    median_filtered["median_hw_ratio"] - median_filtered["hw_ratio"]
-)
+median_df = initial_filter.merge(median_ranks, on="rank")
+median_df["hw_ratio"] = median_df["width"] / median_df["height"]
+median_df["median_hw_ratio"] = median_df["median_width"] / median_df["median_height"]
+median_df["hw_ratio_diff"] = median_df["median_hw_ratio"] - median_df["hw_ratio"]
 
-median_filtered = median_filtered[
-    (median_filtered["hw_ratio_diff"] < 0.5) & (median_filtered["hw_ratio_diff"] > -0.5)
+median_filtered = median_df[
+    (median_df["hw_ratio_diff"] < 0.5) & (median_df["hw_ratio_diff"] > -0.5)
 ]
 
-median_filtered
 # %%
 grouped_ranks = (
     median_filtered.groupby("rank")
@@ -54,15 +51,31 @@ final_filter = final_filter[final_filter["pic_count"] >= 5]
 
 final_filter
 
+# %%
+fig, axs = plt.subplots(1, 4, figsize=(20, 5))
 
-import matplotlib.pyplot as plt
+axs[0].hist(median_df["hw_ratio_diff"].to_list(), bins=60)
+axs[0].set_xlabel("hw_ratio_diff")
+axs[0].set_ylabel("Frequency")
+axs[0].set_title("Height / Width Ratio Difference of Image vs Median of Manga")
 
-plt.hist(final_filter["pic_count"].to_list(), bins=60)
+axs[1].hist(pic_summary["pct_white"].to_list(), bins=60)
+axs[1].set_xlabel("pct_white")
+axs[1].set_ylabel("Frequency")
+axs[1].set_title("Percent Image Contains White Pixels")
 
-plt.xlabel("Values")
-plt.ylabel("Frequency")
-plt.title("Histogram")
+axs[2].hist(pic_summary["pct_black"].to_list(), bins=60)
+axs[2].set_xlabel("pct_black")
+axs[2].set_ylabel("Frequency")
+axs[2].set_title("Percent Image Contains Black Pixels")
 
+axs[3].hist(final_filter["pic_count"].to_list(), bins=60)
+axs[3].set_xlabel("number of images")
+axs[3].set_ylabel("Frequency")
+axs[3].set_title("Number of Images per Manga")
+
+plt.tight_layout()
+plt.savefig("data/images/results/image_filter_summary.png")
 plt.show()
 
 # %%

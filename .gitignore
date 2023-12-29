@@ -1,9 +1,11 @@
 *.json
 data/images/saved_manga
 data/images/saved_covers
-data/images/summary
 data/raw
 data/tokens
-*.csv
-*.jpg
-*.jpg
+data/interim/aggregate_scores.csv
+data/interim/image_feature_pca.csv
+data/interim/image_features_by_manga.csv
+data/interim/image_features_CVN_C_pca.csv
+data/interim/image_features_CVN_S_pca.csv
+data/processed
