@@ -1,6 +1,6 @@
-# Manga Art Style Driven Recommendation Model
+# Manga Recommendation by Art Style
 
-Welcome to the Manga Art Style Recommendations Mdoel project repository! This project introduces an innovative recommendation model that seamlessly integrates content-based filtering techniques with a distinctive emphasis on manga art style analysis. The approach involves feature extraction utilizing a pre-trained image classification model. While conventional manga recommendation models predominantly rely on collaborative filtering, our model pioneers the exploration of manga art styles to elevate the recommendation process.
+Welcome to the Manga Recommendation by Art Style project repository! This project introduces an innovative recommendation model that seamlessly integrates content-based filtering techniques with a distinctive emphasis on manga art style analysis. The approach involves feature extraction utilizing a pre-trained image classification model. While conventional manga recommendation models predominantly rely on collaborative filtering, our model pioneers the exploration of manga art styles to elevate the recommendation process.
 
 ## 1. Overview
 
@@ -124,7 +124,6 @@ In conclusion, the project found significant applications in recommending simila
 !["a"](data/images/results/doc2vec/mal_demographic/doc2vec_mal_demographic_.gif "a")
 !["a"](data/images/results/doc2vec/mean_score/doc2vec_mean_score_.gif "a")
 !["a"](data/images/results/doc2vec/starting_decade/doc2vec_starting_decade_.gif "a")
-
 
 !["a"](data/images/results/tag_svd/mal_demographic/tag_svd_mal_demographic_.gif "a")
 !["a"](data/images/results/tag_svd/mean_score/tag_svd_mean_score_.gif "a")
