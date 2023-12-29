@@ -57,7 +57,7 @@ Overall, the project has yielded surprising results in our ability to differenti
 **Vinland Saga** - Seinen
 !["a"](data/images/results/random_recc/vinland_saga_img.png "vinland_saga_img")
 
-[Art Similarity Table](https://github.com/albechen/arm-thing/.csv) this is the final table with the top 10 manga along with their cosine similarity based on image features.
+[Art Similarity Table]([https://github.com/albechen/arm-thing/.csv](https://github.com/albechen/manga_recommendation_by_art_style/blob/main/data/final/top_similarties_image_feature.csv)) this is the final table with the top 10 manga along with their cosine similarity based on image features.
 
 ## 2. Methodology
 
